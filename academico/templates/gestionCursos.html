@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion de Cursos</title>
+    <link rel="short icon" href="{% static 'img/logo.png' %}">
+    <!-- Boostrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">  
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" href="{% static 'css/gestionCursos.css' %}">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">ACADEMICO</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/contacto">Contacto</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h2>Gestion de Curso</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <form id="formularioCurso" action="/registrarCurso/" method="POST">{% csrf_token %}
+                            <div class="form-group">
+                                <input type="text" id="txtNombre" name="txtNombre" class="form-control" minlength="3" maxlength="30" placeholder="Nombre" autofocus required>
+                            </div>
+                            <div class="form-group">
+                                <input type="number" id="numCreditos" name="numCreditos" class="form-control" min="1" max="10" value="1" required>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success btn-block text-white"><i class="fa-solid fa-floppy-disk"></i>        Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <h2>Listado de Cursos</h2>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="centrado">#</th>
+                                <th class="centrado">Curso</th> 
+                                <th class="centrado">Creditos</th>
+                                <th class="centrado" colspan="2">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for c in object_list %}
+                            <tr>
+                                <td class="centrado">{{forloop.counter}}</td>
+                                <td class="centrado">{{c.nombre}}</td>
+                                <td class="centrado">{{c.creditos}}</td>
+                                <td class="centrado"><a href="edicionCurso/{{c.id}}" class="btn btn-sm btn-block btn-info"><i class="fa-solid fa-pencil"></i>      Editar</a></td>
+                                <td class="centrado"><a href="eliminacionCurso/{{c.id}}" class="btn btn-sm btn-block btn-danger btnEliminacion"><i class="fa-solid fa-trash-can"></i>      Eliminar</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Boostrap -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+<!-- Sweetalert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{% static 'js/utils/notificacionSwal.js' %}"></script>
+<!-- JS Personalizado -->
+<script src="{% static 'js/gestionCursos.js' %}"></script>
+
+</body>
+
+</html>
